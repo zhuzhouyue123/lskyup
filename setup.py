@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="lskyup",
+    name="LskyProUploader",
     author="JoeZhu",
     version="0.1",
     author_email="zhuzhouyue2005@outlook.com",
@@ -10,7 +10,7 @@ setup(
     license="GPL v3",
     install_requires=['Click', 'Requests'],
     entry_points={
-        "console_scripts": ["lskyup = main:cli"]
+        "console_scripts": ["lskyup = LskyProUploader.main:cli"]
     },
     python_requires=">=3"
 )
