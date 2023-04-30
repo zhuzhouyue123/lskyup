@@ -1,3 +1,0 @@
-[console_scripts]
-lskyup = LskyProUploader.main:cli
-
