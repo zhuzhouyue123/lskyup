@@ -7,7 +7,7 @@ setup(
     author_email="zhuzhouyue2005@outlook.com",
     description="A tool enables you to upload your img to your Lsky Server",
     packages=find_packages(),
-    license="GPL v3",
+    license="GPL-3.0 license",
     install_requires=['Click', 'Requests'],
     entry_points={
         "console_scripts": ["lskyup = LskyProUploader.main:cli"]
