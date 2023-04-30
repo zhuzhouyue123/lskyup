@@ -22,18 +22,18 @@ def upload_img(url, path, headers):  # 利用request模块，使用POST方式上
 
 
 @click.group()  # Click命令组
-def main():
+def cli():
     click.echo("Thanks to use LskyProUploader!")  # 感谢使用本工具
 
 
-@main.command()
+@cli.command()
 def config():  # 设置url和token
     user_token = click.prompt("Please enter your own Lsky token")
     server_url = click.prompt("Please enter your Lsky server's url")
     setting(user_token, server_url)
 
 
-@main.command()
+@cli.command()
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
 def upload(img):  # 上传图片
     with open("config.json") as config_file:
@@ -49,4 +49,4 @@ def upload(img):  # 上传图片
 
 
 if __name__ == '__main__':
-    main()
+    cli()
