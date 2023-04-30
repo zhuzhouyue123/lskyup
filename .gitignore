@@ -4,3 +4,5 @@
 .DS_Store
 /LskyProUploader.egg-info
 LskyProUploader.egg-info
+LskyProUploader/config.json
+/LskyProUploader/config.json
