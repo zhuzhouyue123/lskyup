@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="lskyup",
     author="JoeZhu",
+    version="0.1",
     author_email="zhuzhouyue2005@outlook.com",
     description="A tool enables you to upload your img to your Lsky Server",
     packages=find_packages(),
