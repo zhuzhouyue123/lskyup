@@ -1,16 +1,52 @@
-# 这是一个示例 Python 脚本。
-
-# 按 ⌃R 执行或将其替换为您的代码。
-# 按 双击 ⇧ 在所有地方搜索类、文件、工具窗口、操作和设置。
-
-
-def print_hi(name):
-    # 在下面的代码行中使用断点来调试脚本。
-    print(f'Hi, {name}')  # 按 ⌘F8 切换断点。
+import click
+import requests
+import json
 
 
-# 按间距中的绿色按钮以运行脚本。
+def setting(token, url):  # 设置服务器url和Lsky Token，输出到config.json
+    user_configs = {"Url": url, "Token": token}
+    with open("config.json", "w", encoding="utf-8") as f:
+        json.dump(user_configs, f, ensure_ascii=False, indent=4)
+
+
+def upload_img(url, path, headers):  # 利用request模块，使用POST方式上传图片
+    files = {"file": open(path, "rb")}
+    results = requests.post(url, files=files, headers=headers)
+    results.encoding = 'utf-8'
+    if results.status_code == 200:
+        results_data = json.loads(results.text)
+        img_url = results_data["data"]["links"]["url"]
+        click.echo(img_url)
+    else:
+        results.raise_for_status()
+
+
+@click.group()  # Click命令组
+def main():
+    click.echo("Thanks to use LskyProUploader!")  # 感谢使用本工具
+
+
+@main.command()
+def config():  # 设置url和token
+    user_token = click.prompt("Please enter your own Lsky token")
+    server_url = click.prompt("Please enter your Lsky server's url")
+    setting(user_token, server_url)
+
+
+@main.command()
+@click.argument("img", nargs=-1, type=click.Path(exists=True))
+def upload(img):  # 上传图片
+    with open("config.json") as config_file:
+        settings = json.load(config_file)
+    server_url = settings["Url"]
+    img_token = settings["Token"]
+    post_headers = {"Accept": "application/json",
+                    "Authorization": img_token,
+                    }
+    click.echo("Upload Success:")
+    for img_path in img:
+        upload_img(server_url, img_path, post_headers)
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# 访问 https://www.jetbrains.com/help/pycharm/ 获取 PyCharm 帮助
+    main()
