@@ -16,18 +16,40 @@ def upload_img(url, path, headers):  # 利用request模块，使用POST方式上
     if results.status_code == 200:
         results_data = json.loads(results.text)
         img_url = results_data["data"]["links"]["url"]
-        click.echo(img_url)
+        return img_url
     else:
-        results.raise_for_status()
+        click.echo("Failed" + str(results.status_code))
+        return "fail"
 
 
-def print_info(ctx, param, value):  # param 为选项变量 click.Option
+def print_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
     if (not value or ctx.resilient_parsing) and param != "":
         return
     with open("config.json") as config_file:
         settings = json.load(config_file)
-    click.echo("Server: "+settings["Url"])
-    click.echo("Token: "+settings["Token"])
+    click.echo("Server: " + settings["Url"])
+    click.echo("Token: " + settings["Token"])
+    ctx.exit()
+
+def print_version(ctx, param, value):
+    if (not value or ctx.resilient_parsing) and param != "":
+        return
+    click.echo("""
+ ▄█          ▄████████    ▄█   ▄█▄ ▄██   ▄   ███    █▄     ▄███████▄ 
+███         ███    ███   ███ ▄███▀ ███   ██▄ ███    ███   ███    ███ 
+███         ███    █▀    ███▐██▀   ███▄▄▄███ ███    ███   ███    ███ 
+███         ███         ▄█████▀    ▀▀▀▀▀▀███ ███    ███   ███    ███ 
+███       ▀███████████ ▀▀█████▄    ▄██   ███ ███    ███ ▀█████████▀  
+███                ███   ███▐██▄   ███   ███ ███    ███   ███        
+███▌    ▄    ▄█    ███   ███ ▀███▄ ███   ███ ███    ███   ███        
+█████▄▄██  ▄████████▀    ███   ▀█▀  ▀█████▀  ████████▀   ▄████▀      
+▀                        ▀                                           
+    """)
+    click.echo("""
+           Version 0.1 © JoeZhu ALL RIGHTS RESERVED
+                       LICENSE  GPL-V3
+             CONTACT : zhuzhouyue2005@outlook.com
+    """)
     ctx.exit()
 
 
@@ -38,8 +60,14 @@ def print_info(ctx, param, value):  # param 为选项变量 click.Option
               expose_value=False,
               is_eager=True,
               help="Show the current token & server")
+@click.option("-v", "--version",
+              is_flag=True,
+              callback=print_version,
+              expose_value=False,
+              is_eager=True,
+              help="Show the current version")
 def cli():
-    click.echo("Thanks to use LskyProUploader!")  # 感谢使用本工具
+    click.echo("Thanks to use LskyProUploader!")  #
 
 
 @cli.command()
@@ -53,7 +81,7 @@ def config():  # 设置url和token
 @cli.command()
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
 def upload(img):  # 上传图片
-    """Upload the img"""
+    """Upload the images"""
     with open("config.json") as config_file:
         settings = json.load(config_file)
     server_url = settings["Url"]
@@ -61,9 +89,16 @@ def upload(img):  # 上传图片
     post_headers = {"Accept": "application/json",
                     "Authorization": img_token,
                     }
-    click.echo("Upload Success:")
-    for img_path in img:
-        upload_img(server_url, img_path, post_headers)
+    click.echo("Uploader Processing:")
+    output = "Upload Success:"
+    with click.progressbar(img) as bar:
+        for img_path in bar:
+                result_output = upload_img(server_url, img_path, post_headers)
+                if result_output == "fail":
+                    continue
+                else:
+                    output += "\n" + result_output
+    click.echo(output)
 
 
 if __name__ == '__main__':
