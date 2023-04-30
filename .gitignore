@@ -2,3 +2,5 @@
 /__pycache__
 /.idea
 .DS_Store
+/LskyProUploader.egg-info
+LskyProUploader.egg-info

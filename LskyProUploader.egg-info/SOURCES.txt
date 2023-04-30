@@ -1,0 +1,10 @@
+README.md
+setup.py
+LskyProUploader/__init__.py
+LskyProUploader/main.py
+LskyProUploader.egg-info/PKG-INFO
+LskyProUploader.egg-info/SOURCES.txt
+LskyProUploader.egg-info/dependency_links.txt
+LskyProUploader.egg-info/entry_points.txt
+LskyProUploader.egg-info/requires.txt
+LskyProUploader.egg-info/top_level.txt
