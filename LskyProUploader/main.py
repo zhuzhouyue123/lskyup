@@ -24,6 +24,12 @@ def upload_img(url, path, headers):  # 利用request模块，使用POST方式上
     else:
         click.echo("Failed" + str(results.status_code))
         return "fail"
+    
+def compressor(ctx, param, value):
+    if (not value or ctx.resilient_parsing) and param != "":
+        return
+    print(param)
+    ctx.exit()
 
 
 def print_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
@@ -41,8 +47,9 @@ def print_user_info(ctx, param, value):  # --info 选项的回调函数，显示
         return
     with open("config.json") as config_file:
         settings = json.load(config_file)
-    url = settings["Url"]
-    requests.get()
+    url = settings["Url"]+"/profile"
+    response = requests.get(url)
+    print(response.text)
     ctx.exit()
 
 def print_version(ctx, param, value):
@@ -99,6 +106,12 @@ def config():  # 设置url和token
 
 
 @cli.command()
+@click.option("-c", "--compress",
+              is_flag=True,
+              callback=compressor,
+              expose_value=False,
+              is_eager=True,
+              help="Compress your Images before uploading")
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
 def upload(img):  # 上传图片
     """Upload the images"""
