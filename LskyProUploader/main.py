@@ -23,6 +23,20 @@ def get_path(types):
         return config_dir
 
 
+# 这部分代码使用了 Luban-Py 开源项目
+# 详见：https://github.com/Freefighter/Luban-Py
+#
+# 在此保留 Luban-Py 项目的版权声明：
+#
+# Copyright 2018 Yifan Chen
+#
+# 本软件源代码受 Apache License, Version 2.0 许可证保护，
+# 详见 https://www.apache.org/licenses/LICENSE-2.0.html
+#
+# 原始代码来自 Luban-Py 项目的 luban.py 文件，我们在此基础上进行了修改和封装。
+# 所有权归 Luban-Py 项目作者所有，本代码仅供学习交流使用。
+
+
 class Compressor(object):  # 压缩器类
 
     def __init__(self, ignoreBy=102400, quality=75):  # 初始化
@@ -213,7 +227,7 @@ def print_version(ctx, param, value):  # --version 输出版本信息回调函�
               is_eager=True,
               help="Show the User information")
 def cli():
-    click.echo("Thanks to use LskyProUploader!")  #
+    click.echo("LskyProUploader Copyright (C) 2023-now Joe Zhu\nLICENSE GPL-V3")
 
 
 @cli.command()
