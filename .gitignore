@@ -1,11 +1,22 @@
-/config.json
-/__pycache__
-/.idea
 .DS_Store
-/LskyProUploader.egg-info
-LskyProUploader.egg-info
-LskyProUploader/config.json
-/LskyProUploader/config.json
-LskyProUploader/__pycache__
+LskyProUploader.egg-info/
 .vscode
-LskyProUploader/Img_cache
+# 忽略Python编译生成的文件
+*.pyc
+__pycache__/
+
+# 忽略开发过程中生成的临时文件或目录
+*.log
+*.swp
+*.swo
+*.tmp
+*.bak
+.cache/
+
+# 忽略IDE或编辑器生成的文件或目录
+.vscode/
+*.idea/
+
+# 忽略本地配置文件
+*.env
+*.local
