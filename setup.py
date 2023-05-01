@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open("requirements.txt", "r") as f:
+    requirements = f.read().splitlines()
+
 setup(
     name="LskyProUploader",
     author="JoeZhu",
@@ -7,10 +10,9 @@ setup(
     author_email="zhuzhouyue2005@outlook.com",
     description="A tool enables you to upload your img to your Lsky Server",
     packages=find_packages(),
-    license="GPL-3.0 license",
-    install_requires=['Click', 'Requests'],
+    install_requires=requirements,
+    license="GPLv3+",
     entry_points={
         "console_scripts": ["lskyup = LskyProUploader.main:cli"]
     },
-    python_requires=">=3"
 )
