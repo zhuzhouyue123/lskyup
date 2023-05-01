@@ -211,6 +211,11 @@ Clean Img_cache successfully
 
 ## Change Log
 ---
+### v0.1.3 (2023.5.1 22:33 GMT +8)
+
+- 更新了README.md
+- 修复了一些细小的问题
+
 ### v0.1.2 (2023.5.1 21:38 GMT +8)
 
 - 第一个可以用的版本

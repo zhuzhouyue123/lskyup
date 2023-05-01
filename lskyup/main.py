@@ -198,7 +198,7 @@ def print_version(ctx, param, value):  # --version 输出版本信息回调函�
                 fg="green"
                 )
     click.secho("""
-           Version 0.1.2 © JoeZhu ALL RIGHTS RESERVED
+           Version 0.1.3 © JoeZhu ALL RIGHTS RESERVED
                        LICENSE  GPL-V3
              CONTACT : zhuzhouyue2005@outlook.com
     """,
