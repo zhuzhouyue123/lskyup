@@ -76,10 +76,4 @@ class Luban(object):
                                         Image.ANTIALIAS)
             
             cache.save(self.targetPath, self.type, quality=self.quality)
-            
-if __name__ == '__main__':
-    path = r"C:\Users\William Chen\Documents\GitHub\Luban-Py\test.jpg"
-    
-    compressor = Luban()
-    compressor.setPath(path)
-    compressor.compress()
+
