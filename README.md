@@ -13,15 +13,15 @@
 * [安装](#安装)
 * [使用](#使用)
 	* [完整命令帮助列表](#完整命令帮助列表)
-	* [lskyup config ](#lskyup config-配置Server和Token)
+	* [lskyup config ](#lskyup config)
 	    * [获取token]( #获取token)
 	* [lskyup --version](#lskyup---version)
 	* [lskyup --info](#lskyup---info)
 	* [lskyup --user](#lskyup---user)
 	* [lskyup upload](#lskyup-upload)
 	    * [lskyup upload --help](#lskyup upload---help-upload-子命令帮助列表)
-	    * [不压缩上传 ](#不压缩上传-lskyup-upload-/img1-/img2-/img3)
-	    * [压缩后上传](#压缩后上传-lskup-upload---compress-/img1-/img2-/img3)
+	    * [不压缩上传 ](#不压缩上传)
+	    * [压缩后上传](#压缩后上传)
 * [lskyup clean](#lskyup-clean)
 * [Change Log](#Change-Log)
 * [LICENSE](#LICENSE)
@@ -67,7 +67,9 @@ Commands:
   upload  Upload the images
 ```
 
-### `lskyup config` 配置Server和Token
+### `lskyup config` 
+
+配置Server和Token
 
 ```shell
 ❯ lskyup config
@@ -143,7 +145,9 @@ Storage Used/Total: 55122.47 KB/51200000 KB
 
 ### `lskyup upload`
 
-#### `lskyup upload --help`     upload子命令帮助列表
+#### `lskyup upload --help`     
+
+upload子命令帮助列表
 
 ```shell
 ❯ lskyup upload --help
@@ -160,7 +164,9 @@ Options:
 
 
 
-#### 不压缩上传 `lskyup upload /img1 /img2 /img3`
+#### 不压缩上传
+
+`lskyup upload /img1 /img2 /img3`
 
 不压缩上传图片，返回图片访问url，支持多张图片（路径之间一个空格）
 
@@ -177,7 +183,9 @@ https://example.com/i/2023/05/01/3f4fb1d6eb10d.jpg
 https://example.com/i/2023/05/01/a6f4fb12hb15f.png
 ```
 
-#### 压缩后上传 `lskup upload --compress /img1 /img2 /img3`
+#### 压缩后上传
+
+`lskyup upload -c /img1 /img2 /img3`
 
 压缩后上传图片（增加参数`--compress`）
 
