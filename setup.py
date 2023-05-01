@@ -6,7 +6,7 @@ with open("requirements.txt", "r") as f:
 setup(
     name="lskyup",
     author="JoeZhu",
-    version="0.1.1",
+    version="0.1.2",
     author_email="zhuzhouyue2005@outlook.com",
     description="A tool enables you to upload your img to your Lsky Server",
     packages=find_packages(),

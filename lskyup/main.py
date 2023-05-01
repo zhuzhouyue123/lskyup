@@ -198,7 +198,7 @@ def print_version(ctx, param, value):  # --version 输出版本信息回调函�
                 fg="green"
                 )
     click.secho("""
-           Version 0.1.1 © JoeZhu ALL RIGHTS RESERVED
+           Version 0.1.2 © JoeZhu ALL RIGHTS RESERVED
                        LICENSE  GPL-V3
              CONTACT : zhuzhouyue2005@outlook.com
     """,
@@ -241,11 +241,14 @@ def config():  # 设置url和token
 def clean():
     """Clean Img Cache"""
     dir_path = get_path("cache")
-    try:
-        shutil.rmtree(dir_path)
-        click.secho(f"{dir_path} Clean Img_cache successfully！", fg="green")
-    except OSError as e:
-        click.secho(f"Error: {dir_path} Fail to clean Img_cache！：{e}", fg="red")
+    if not os.path.exists(dir_path):
+        click.secho("The cache file has already been cleaned", fg="green")
+    else:
+        try:
+            shutil.rmtree(dir_path)
+            click.secho("Clean Img_cache successfully", fg="green")
+        except OSError as e:
+            click.secho(f"{dir_path} ERROR", fg="red")
 
 
 @cli.command()
