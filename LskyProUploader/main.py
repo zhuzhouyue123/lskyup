@@ -1,9 +1,9 @@
+import shutil
 import click
 import requests
 import json
 from PIL import Image
 import os
-import sys
 from shutil import copyfile
 from math import ceil
 
@@ -226,17 +226,20 @@ def config():  # 设置url和token
 
 @cli.command()
 def clean():
-    """Clean Cache"""
-    print(get_path("cache"))
+    """Clean Img Cache"""
+    dir_path = get_path("cache")
+    try:
+        shutil.rmtree(dir_path)
+        click.secho(f"{dir_path} Clean Img_cache successfully！", fg="green")
+    except OSError as e:
+        click.secho(f"Error: {dir_path} Fail to clean Img_cache！：{e}", fg="red")
+
 
 @cli.command()
 @click.option("-c", "--compress",
               is_flag=True,
-              expose_value=False,
-              is_eager=True,
               help="Compress your Images before uploading")
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
-@click.pass_context
 def upload(compress, img):  # 上传图片，可以选择是否压缩
     """Upload the images"""
     with open(get_path("config")) as config_file:
@@ -246,9 +249,10 @@ def upload(compress, img):  # 上传图片，可以选择是否压缩
     post_headers = {"Accept": "application/json",
                     "Authorization": img_token,
                     }
-    click.echo("Uploader Processing:")
+    click.echo("Uploader is Processing:")
     output = "Upload Success:"
     if compress:
+        click.echo("Upload compressed Img")
         compressor = Compressor()
         with click.progressbar(img) as bar:
             for img_path in bar:
@@ -260,6 +264,7 @@ def upload(compress, img):  # 上传图片，可以选择是否压缩
                 else:
                     output += "\n" + result_output
     else:
+        click.echo("Upload uncompressed Img")
         with click.progressbar(img) as bar:
             for img_path in bar:
                 result_output = upload_img(server_url, img_path, post_headers)
