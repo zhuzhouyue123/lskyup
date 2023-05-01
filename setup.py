@@ -15,4 +15,9 @@ setup(
     entry_points={
         "console_scripts": ["lskyup = lskyup.main:cli"]
     },
+    python_requires='>=3.6',
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent"
+        ]
 )
