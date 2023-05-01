@@ -20,3 +20,6 @@ __pycache__/
 # 忽略本地配置文件
 *.env
 *.local
+
+build/
+dist/
