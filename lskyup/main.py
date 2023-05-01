@@ -165,7 +165,6 @@ def print_user_info(ctx, param, value):  # --user 选项的回调函数，显示
     response = requests.get(url, headers=get_headers)
     response.encoding = 'utf-8'
     response_data = json.loads(response.text)
-    print(response_data)
     if response_data["status"]:
         click.echo(click.style("USER INFORMATION", fg="green", bold=True, italic=True, reverse=True))
         click.echo(click.style("User name: " + response_data["data"]["name"]))
