@@ -1,3 +1,18 @@
+```shell
+
+ ▄█          ▄████████    ▄█   ▄█▄ ▄██   ▄   ███    █▄     ▄███████▄
+███         ███    ███   ███ ▄███▀ ███   ██▄ ███    ███   ███    ███
+███         ███    █▀    ███▐██▀   ███▄▄▄███ ███    ███   ███    ███
+███         ███         ▄█████▀    ▀▀▀▀▀▀███ ███    ███   ███    ███
+███       ▀███████████ ▀▀█████▄    ▄██   ███ ███    ███ ▀█████████▀
+███                ███   ███▐██▄   ███   ███ ███    ███   ███
+███▌    ▄    ▄█    ███   ███ ▀███▄ ███   ███ ███    ███   ███
+█████▄▄██  ▄████████▀    ███   ▀█▀  ▀█████▀  ████████▀   ▄████▀
+▀                        ▀
+
+
+```
+
 # LskyUp
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lskyup?style=for-the-badge)![PyPI - License](https://img.shields.io/pypi/l/lskyup?style=for-the-badge)![GitHub commit activity](https://img.shields.io/github/commit-activity/m/zhuzhouyue123/lskyup?style=for-the-badge)![PyPI](https://img.shields.io/pypi/v/lskyup?style=for-the-badge)![GitHub repo size](https://img.shields.io/github/repo-size/zhuzhouyue123/lskyup?style=for-the-badge)![GitHub top language](https://img.shields.io/github/languages/top/zhuzhouyue123/lskyup?color=orange&style=for-the-badge)![Author: JoeZhu (shields.io)](https://img.shields.io/badge/Author-JoeZhu-green?style=for-the-badge)![Thanks (shields.io)](https://img.shields.io/badge/-Thanks-blue?style=for-the-badge)![for (shields.io)](https://img.shields.io/badge/-for-orange?style=for-the-badge)![visiting (shields.io)](https://img.shields.io/badge/-visiting-success?style=for-the-badge)![my (shields.io)](https://img.shields.io/badge/-my-yellow?style=for-the-badge)![repository (shields.io)](https://img.shields.io/badge/-repository-9cf?style=for-the-badge)![A Star ? (shields.io)](https://img.shields.io/badge/-A%20Star%20%20%3F-yellow?style=for-the-badge)
