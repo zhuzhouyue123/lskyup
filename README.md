@@ -49,7 +49,7 @@
 
 使用Python的os、json库来实现路径的获取、拼接和文件的读取写入
 
-图片压缩的算法参考了这个项目[Luban-Py]([Freefighter/Luban-Py: Python version of Luban(鲁班)—Image compression with efficiency very close to WeChat Moments/可能是最接近微信朋友圈的图片压缩算法 (github.com)](https://github.com/Freefighter/Luban-Py))
+图片压缩的算法参考了这个项目[Luban-Py](https://github.com/Freefighter/Luban-Py)
 
 ## 安装
 
