@@ -1,6 +1,84 @@
 import click
 import requests
 import json
+from PIL import Image
+import os
+from shutil import copyfile
+from math import ceil
+
+
+class Compressor(object):   # 压缩器类
+
+    def __init__(self, ignoreBy=102400, quality=98):  # 初始化
+        self.ignoreBy = ignoreBy
+        self.quality = quality
+
+    def setPath(self, path):
+        self.path = path
+
+    def setTargetDir(self, foldername="Img_cache"):
+        self.dir, self.filename = os.path.split(self.path)
+        self.targetDir = os.path.join("./LskyProUploader/", foldername)
+
+        if not os.path.exists(self.targetDir):
+            os.makedirs(self.targetDir)
+
+        self.targetPath = os.path.join(self.targetDir, "c_"+self.filename)
+
+    def load(self):
+        self.img = Image.open(self.path)
+
+        if self.img.mode == "RGB":
+            self.type = "JPEG"
+        elif self.img.mode == "RGBA":
+            self.type = "PNG"
+        else:  # 其他的图片就转成JPEG
+            self.img == Image.convert("RGB")
+            self.type = "JPEG"
+
+    def computeScale(self):
+        # 计算缩小的倍数
+
+        srcWidth, srcHeight = self.img.size
+
+        srcWidth = srcWidth + 1 if srcWidth % 2 == 1 else srcWidth
+        srcHeight = srcHeight + 1 if srcHeight % 2 == 1 else srcHeight
+
+        longSide = max(srcWidth, srcHeight)
+        shortSide = min(srcWidth, srcHeight)
+
+        scale = shortSide / longSide
+        if (scale <= 1 and scale > 0.5625):
+            if (longSide < 1664):
+                return 1
+            elif (longSide < 4990):
+                return 2
+            elif (longSide > 4990 and longSide < 10240):
+                return 4
+            else:
+                return max(1, longSide // 1280)
+
+        elif (scale <= 0.5625 and scale > 0.5):
+            return max(1, longSide // 1280)
+
+        else:
+            return ceil(longSide / (1280.0 / scale))
+
+    def compress(self):
+        self.setTargetDir()
+        # 先调整大小，再调整品质
+        if os.path.getsize(self.path) <= self.ignoreBy:
+            copyfile(self.path, self.targetPath)
+
+        else:
+            self.load()
+
+            scale = self.computeScale()
+            srcWidth, srcHeight = self.img.size
+            cache = self.img.resize((srcWidth//scale, srcHeight//scale),
+                                    Image.ANTIALIAS)
+
+            cache.save(self.targetPath, self.type, quality=self.quality)
 
 
 def setting(token, url):  # 设置服务器url和Lsky Token，输出到./LskyProUploader/config.json
@@ -25,11 +103,10 @@ def upload_img(url, path, headers):  # 利用request模块，使用POST方式上
         click.echo("Failed" + str(results.status_code))
         return "fail"
     
-def compressor(ctx, param, value): # --compress 图片压缩参数回调函数（In Development）
+def compressor(ctx, param, value, img): # --compress 图片压缩参数回调函数（In Development）
     if (not value or ctx.resilient_parsing) and param != "":
         return
-    print(param)
-    ctx.exit()
+    
 
 
 def print_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
@@ -130,30 +207,52 @@ def config():  # 设置url和token
 @cli.command()
 @click.option("-c", "--compress",
               is_flag=True,
-              callback=compressor,
               expose_value=False,
               is_eager=True,
               help="Compress your Images before uploading")
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
-def upload(img):  # 上传图片
+@click.pass_context
+def upload(compress,img):  # 上传图片
     """Upload the images"""
-    with open("./LskyProUploader/config.json") as config_file:
-        settings = json.load(config_file)
-    server_url = settings["Url"]
-    img_token = settings["Token"]
-    post_headers = {"Accept": "application/json",
-                    "Authorization": img_token,
-                    }
-    click.echo("Uploader Processing:")
-    output = "Upload Success:"
-    with click.progressbar(img) as bar:
-        for img_path in bar:
-            result_output = upload_img(server_url, img_path, post_headers)
-            if result_output == "fail":
-                continue
-            else:
-                output += "\n" + result_output
-    click.echo(output)
+    if compress:
+        compressor = Compressor()
+        with open("./LskyProUploader/config.json") as config_file:
+            settings = json.load(config_file)
+        server_url = settings["Url"]
+        img_token = settings["Token"]
+        post_headers = {"Accept": "application/json",
+                        "Authorization": img_token,
+                        }
+        click.echo("Uploader Processing:")
+        output = "Upload Success:"
+        with click.progressbar(img) as bar:
+            for img_path in bar:
+                compressor.setPath(img_path)
+                compressor.compress()
+                result_output = upload_img(server_url, compressor.targetPath, post_headers)
+                if result_output == "fail":
+                    continue
+                else:
+                    output += "\n" + result_output
+        click.echo(output)
+    else:
+        with open("./LskyProUploader/config.json") as config_file:
+            settings = json.load(config_file)
+        server_url = settings["Url"]
+        img_token = settings["Token"]
+        post_headers = {"Accept": "application/json",
+                        "Authorization": img_token,
+                        }
+        click.echo("Uploader Processing:")
+        output = "Upload Success:"
+        with click.progressbar(img) as bar:
+            for img_path in bar:
+                result_output = upload_img(server_url, img_path, post_headers)
+                if result_output == "fail":
+                    continue
+                else:
+                    output += "\n" + result_output
+        click.echo(output)
 
 
 if __name__ == '__main__':
