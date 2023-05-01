@@ -42,20 +42,39 @@ def print_info(ctx, param, value):  # --info 选项的回调函数，显示当�
     ctx.exit()
 
 
-def print_user_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
+def print_user_info(ctx, param, value):  # --user 选项的回调函数，显示当前用户信息
     if (not value or ctx.resilient_parsing) and param != "":
         return
     with open("LskyProUploader/config.json") as config_file:
         settings = json.load(config_file)
     url = settings["Url"]+"/profile"
-    response = requests.get(url)
-    print(response.text)
+    token = settings["Token"]
+    get_headers = {"Accept": "application/json",
+                    "Authorization": token,
+                    }
+    response = requests.get(url,headers=get_headers)
+    response.encoding = 'utf-8'
+    response_data = json.loads(response.text)
+    print(response_data)
+    if response_data["status"] == True:
+        click.echo(click.style("USER INFORMATION",fg="green",bold=True,italic=True,reverse=True))
+        click.echo(click.style("User name: "+response_data["data"]["name"]))
+        click.echo(click.style("E-mail: "+response_data["data"]["email"]))
+        click.echo(click.style("Website: "+response_data["data"]["url"]))
+        click.echo(click.style("Image Numbers: "+str(response_data["data"]["image_num"])))
+        click.echo(click.style("Album Numbers: "+str(response_data["data"]["album_num"])))
+        click.echo(click.style("Storage Used/Total: "
+                   +str(response_data["data"]["used_capacity"])
+                   +" KB/"
+                   +str(response_data["data"]["capacity"])
+                   +" KB"
+                   ))
     ctx.exit()
 
 def print_version(ctx, param, value):
     if (not value or ctx.resilient_parsing) and param != "":
         return
-    click.echo("""
+    click.secho("""
  ▄█          ▄████████    ▄█   ▄█▄ ▄██   ▄   ███    █▄     ▄███████▄ 
 ███         ███    ███   ███ ▄███▀ ███   ██▄ ███    ███   ███    ███ 
 ███         ███    █▀    ███▐██▀   ███▄▄▄███ ███    ███   ███    ███ 
@@ -65,12 +84,15 @@ def print_version(ctx, param, value):
 ███▌    ▄    ▄█    ███   ███ ▀███▄ ███   ███ ███    ███   ███        
 █████▄▄██  ▄████████▀    ███   ▀█▀  ▀█████▀  ████████▀   ▄████▀      
 ▀                        ▀                                           
-    """)
-    click.echo("""
+    """,
+    fg="green"
+    )
+    click.secho("""
            Version 0.1 © JoeZhu ALL RIGHTS RESERVED
                        LICENSE  GPL-V3
              CONTACT : zhuzhouyue2005@outlook.com
-    """)
+    """,
+    fg="yellow",bold=True)
     ctx.exit()
 
 
