@@ -3,9 +3,9 @@ import requests
 import json
 
 
-def setting(token, url):  # 设置服务器url和Lsky Token，输出到config.json
+def setting(token, url):  # 设置服务器url和Lsky Token，输出到LskyProUploader/config.json
     user_configs = {"Url": url, "Token": token}
-    with open("config.json", "w", encoding="utf-8") as f:
+    with open("LskyProUploader/config.json", "w", encoding="utf-8") as f:
         json.dump(user_configs, f, ensure_ascii=False, indent=4)
 
 
@@ -35,7 +35,7 @@ def compressor(ctx, param, value):
 def print_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
     if (not value or ctx.resilient_parsing) and param != "":
         return
-    with open("config.json") as config_file:
+    with open("LskyProUploader/config.json") as config_file:
         settings = json.load(config_file)
     click.echo("Server: " + settings["Url"])
     click.echo("Token: " + settings["Token"])
@@ -45,7 +45,7 @@ def print_info(ctx, param, value):  # --info 选项的回调函数，显示当�
 def print_user_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
     if (not value or ctx.resilient_parsing) and param != "":
         return
-    with open("config.json") as config_file:
+    with open("LskyProUploader/config.json") as config_file:
         settings = json.load(config_file)
     url = settings["Url"]+"/profile"
     response = requests.get(url)
@@ -115,7 +115,7 @@ def config():  # 设置url和token
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
 def upload(img):  # 上传图片
     """Upload the images"""
-    with open("config.json") as config_file:
+    with open("LskyProUploader/config.json") as config_file:
         settings = json.load(config_file)
     server_url = settings["Url"]
     img_token = settings["Token"]
