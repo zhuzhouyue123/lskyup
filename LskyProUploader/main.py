@@ -25,7 +25,7 @@ def upload_img(url, path, headers):  # 利用request模块，使用POST方式上
         click.echo("Failed" + str(results.status_code))
         return "fail"
     
-def compressor(ctx, param, value):
+def compressor(ctx, param, value): # --compress 图片压缩参数回调函数（In Development）
     if (not value or ctx.resilient_parsing) and param != "":
         return
     print(param)
