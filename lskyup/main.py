@@ -10,7 +10,7 @@ from math import ceil
 
 def get_path(types):
     home_dir = os.path.expanduser('~')
-    config_dir = os.path.join(home_dir, 'LskyProUploader/')
+    config_dir = os.path.join(home_dir, 'lskyup/')
     if not os.path.exists(config_dir):
         os.makedirs(config_dir)
     if types == "config":
@@ -119,7 +119,7 @@ class Compressor(object):  # 压缩器类
             cache.save(self.targetPath, self.type, quality=self.quality)
 
 
-def setting(token, url):  # 设置服务器url和Lsky Token，输出到./LskyProUploader/config.json
+def setting(token, url):  # 设置服务器url和Lsky Token，输出到./lskyup/config.json
     user_configs = {"Url": url, "Token": token}
     with open(get_path("config"), "w", encoding="utf-8") as f:
         json.dump(user_configs, f, ensure_ascii=False, indent=4)
@@ -227,7 +227,7 @@ def print_version(ctx, param, value):  # --version 输出版本信息回调函�
               is_eager=True,
               help="Show the User information")
 def cli():
-    click.echo("LskyProUploader Copyright (C) 2023-now Joe Zhu\nLICENSE GPL-V3")
+    click.echo("lskyup Copyright (C) 2023-now Joe Zhu\nLICENSE GPL-V3")
 
 
 @cli.command()

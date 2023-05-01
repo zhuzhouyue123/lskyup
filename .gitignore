@@ -1,5 +1,5 @@
 .DS_Store
-LskyProUploader.egg-info/
+lskyup.egg-info/
 .vscode
 # 忽略Python编译生成的文件
 *.pyc
