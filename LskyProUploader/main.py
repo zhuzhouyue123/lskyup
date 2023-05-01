@@ -212,7 +212,7 @@ def config():  # 设置url和token
               help="Compress your Images before uploading")
 @click.argument("img", nargs=-1, type=click.Path(exists=True))
 @click.pass_context
-def upload(compress,img):  # 上传图片
+def upload(compress,img):  # 上传图片，可以选择是否压缩
     """Upload the images"""
     if compress:
         compressor = Compressor()
