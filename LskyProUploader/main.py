@@ -13,8 +13,8 @@ def upload_img(url, path, headers):  # 利用request模块，使用POST方式上
     files = {"file": open(path, "rb")}
     results = requests.post(url, files=files, headers=headers)
     results.encoding = 'utf-8'
-    if results.status_code == 200:
-        results_data = json.loads(results.text)
+    results_data = json.loads(results.text)
+    if results.status_code == 200 and results_data["status"] == True:
         img_url = results_data["data"]["links"]["url"]
         return img_url
     else:
@@ -30,6 +30,7 @@ def print_info(ctx, param, value):  # --info 选项的回调函数，显示当�
     click.echo("Server: " + settings["Url"])
     click.echo("Token: " + settings["Token"])
     ctx.exit()
+
 
 def print_version(ctx, param, value):
     if (not value or ctx.resilient_parsing) and param != "":
@@ -93,11 +94,11 @@ def upload(img):  # 上传图片
     output = "Upload Success:"
     with click.progressbar(img) as bar:
         for img_path in bar:
-                result_output = upload_img(server_url, img_path, post_headers)
-                if result_output == "fail":
-                    continue
-                else:
-                    output += "\n" + result_output
+            result_output = upload_img(server_url, img_path, post_headers)
+            if result_output == "fail":
+                continue
+            else:
+                output += "\n" + result_output
     click.echo(output)
 
 

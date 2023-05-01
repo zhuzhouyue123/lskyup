@@ -7,3 +7,4 @@ LskyProUploader.egg-info
 LskyProUploader/config.json
 /LskyProUploader/config.json
 LskyProUploader/__pycache__
+.vscode
