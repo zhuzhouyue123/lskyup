@@ -71,7 +71,7 @@ def print_user_info(ctx, param, value):  # --user 选项的回调函数，显示
                    ))
     ctx.exit()
 
-def print_version(ctx, param, value):
+def print_version(ctx, param, value):   # --version 输出版本信息回调函数
     if (not value or ctx.resilient_parsing) and param != "":
         return
     click.secho("""
