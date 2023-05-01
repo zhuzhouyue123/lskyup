@@ -11,6 +11,10 @@ def setting(token, url):  # 设置服务器url和Lsky Token，输出到config.js
 
 def upload_img(url, path, headers):  # 利用request模块，使用POST方式上传图片
     files = {"file": open(path, "rb")}
+    if url[-1] == "/" and url[-2] != "/":
+        url+="upload"
+    else:
+        url+="/upload"
     results = requests.post(url, files=files, headers=headers)
     results.encoding = 'utf-8'
     results_data = json.loads(results.text)
@@ -31,6 +35,15 @@ def print_info(ctx, param, value):  # --info 选项的回调函数，显示当�
     click.echo("Token: " + settings["Token"])
     ctx.exit()
 
+
+def print_user_info(ctx, param, value):  # --info 选项的回调函数，显示当前服务信息
+    if (not value or ctx.resilient_parsing) and param != "":
+        return
+    with open("config.json") as config_file:
+        settings = json.load(config_file)
+    url = settings["Url"]
+    requests.get()
+    ctx.exit()
 
 def print_version(ctx, param, value):
     if (not value or ctx.resilient_parsing) and param != "":
@@ -60,22 +73,28 @@ def print_version(ctx, param, value):
               callback=print_info,
               expose_value=False,
               is_eager=True,
-              help="Show the current token & server")
+              help="Show the current token & server information")
 @click.option("-v", "--version",
               is_flag=True,
               callback=print_version,
               expose_value=False,
               is_eager=True,
-              help="Show the current version")
+              help="Show the version information")
+@click.option("-u", "--user",
+              is_flag=True,
+              callback=print_user_info,
+              expose_value=False,
+              is_eager=True,
+              help="Show the User information")
 def cli():
     click.echo("Thanks to use LskyProUploader!")  #
 
 
 @cli.command()
 def config():  # 设置url和token
-    """Config the api token and server url"""
-    user_token = click.prompt("Please enter your own Lsky token")
+    """Config your server url and api token"""
     server_url = click.prompt("Please enter your Lsky server's url")
+    user_token = click.prompt("Please enter your own Lsky token")
     setting(user_token, server_url)
 
 
