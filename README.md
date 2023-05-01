@@ -235,4 +235,4 @@ Clean Img_cache successfully
 
 ## LICENSE
 
-[GPLv3+]([zhuzhouyue123/lskyup (github.com)](https://github.com/zhuzhouyue123/lskyup/blob/master/LICENSE)) © Zhouyue Zhu
+[GPLv3+](https://github.com/zhuzhouyue123/lskyup/blob/master/LICENSE) © Zhouyue Zhu
