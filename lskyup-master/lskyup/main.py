@@ -198,7 +198,7 @@ def print_version(ctx, param, value):  # --version 输出版本信息回调函�
                 fg="green"
                 )
     click.secho("""
-           Version 0.1.5 © JoeZhu ALL RIGHTS RESERVED
+           Version 0.1.4 © JoeZhu ALL RIGHTS RESERVED
                        LICENSE  GPL-V3
              CONTACT : zhuzhouyue2005@outlook.com
     """,
@@ -235,20 +235,6 @@ def config():  # 设置url和token
     server_url = click.prompt("Please enter your Lsky server's url")
     user_token = click.prompt("Please enter your own Lsky token")
     setting(user_token, server_url)
-    with open(get_path("config")) as config_file:
-        settings = json.load(config_file)
-    url = settings["Url"] + "/profile"
-    token = settings["Token"]
-    get_headers = {"Accept": "application/json",
-                   "Authorization": token,
-                   }
-    response = requests.get(url, headers=get_headers)
-    response.encoding = 'utf-8'
-    response_data = json.loads(response.text)
-    if response_data["status"]:
-        click.echo("设置成功")
-    else:
-        click.echo("设置失败")
 
 
 @cli.command()

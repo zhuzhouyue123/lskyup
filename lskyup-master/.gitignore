@@ -1,0 +1,25 @@
+.DS_Store
+lskyup.egg-info/
+.vscode
+# 忽略Python编译生成的文件
+*.pyc
+__pycache__/
+
+# 忽略开发过程中生成的临时文件或目录
+*.log
+*.swp
+*.swo
+*.tmp
+*.bak
+.cache/
+
+# 忽略IDE或编辑器生成的文件或目录
+.vscode/
+*.idea/
+
+# 忽略本地配置文件
+*.env
+*.local
+
+build/
+dist/

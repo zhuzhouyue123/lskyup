@@ -6,7 +6,7 @@ with open("requirements.txt", "r") as f:
 setup(
     name="lskyup",
     author="JoeZhu",
-    version="0.1.5",
+    version="0.1.4",
     author_email="zhuzhouyue2005@outlook.com",
     description="A tool enables you to upload your img to your Lsky Server",
     packages=find_packages(),
@@ -20,6 +20,6 @@ setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent"
         ],
-    long_description=open('README.md', encoding="utf-8").read(),
+    long_description=open('README.md').read(),
     long_description_content_type='text/markdown'
 )
