@@ -230,6 +230,11 @@ Clean Img_cache successfully
 
 ## Change Log
 ---
+### v0.1.5（2023.5.7 11:19 GMT +8）
+
+- 增加了config命令的反馈
+- 修复了细小的问题
+
 ### v0.1.4 (2023.5.1 23:01 GMT +8)
 
 - 修复了一些细小的问题
